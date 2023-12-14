@@ -1,0 +1,38 @@
+import java.io.File;
+import java.util.Scanner;
+import java.util.ArrayList;
+public class Part1 {
+
+    public static void main(String[] args){
+        try {
+            File f = new File("input.txt");
+            Scanner scan = new Scanner(f);
+            int sum = 0;
+            while(scan.hasNextLine()){
+                String s = scan.nextLine().split("\\s+", 3)[2];
+                String[] winningStrings = s.split("\\|")[0].split(" ");
+                String[] cardStrings = s.split("\\|")[1].split(" ");
+                ArrayList<Integer> winningNums = new ArrayList<>();
+                ArrayList<Integer> cardNums = new ArrayList<>();
+                for(int i = 0; i < winningStrings.length; i++)
+                    if(!winningStrings[i].equals(""))
+                        winningNums.add(Integer.parseInt(winningStrings[i]));
+                for(int i = 0; i < cardStrings.length; i++)
+                    if(!cardStrings[i].equals(""))
+                        cardNums.add(Integer.parseInt(cardStrings[i]));
+                int cardSum = 0;
+                for(int i = 0; i < winningNums.size(); i++){
+                        if(cardNums.contains(winningNums.get(i))){
+                            if(cardSum == 0) cardSum = 1;
+                            else cardSum *= 2;
+                        }
+                }
+                sum += cardSum;
+            }
+            System.out.println(sum);
+        } catch(Exception e){
+            System.out.println("File does not exist.");
+            e.printStackTrace();
+        }
+    }
+} 
