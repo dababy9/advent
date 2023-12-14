@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.HashSet;
-public class Part1 {
+public class Part2 {
 
     public int nodes = 0;
     public HashMap<Tuple2, Integer> memo = new HashMap<>();
@@ -43,7 +43,7 @@ public class Part1 {
     }
 
     public int pathFind(String start, HashSet<String> visited){
-        int minDist = Integer.MAX_VALUE;
+        int maxDist = Integer.MIN_VALUE;
         if(visited.size() == nodes) return 0;
         try { return memo.get(new Tuple2(start, visited)); }
         catch(Exception e){
@@ -53,12 +53,12 @@ public class Part1 {
                     HashSet<String> newVisited = (HashSet)visited.clone();
                     newVisited.add(t.city);
                     int dist = pathFind(t.city, newVisited) + t.dist;
-                    if(dist < minDist) minDist = dist;
+                    if(dist > maxDist) maxDist = dist;
                 }
             }
-            memo.put(new Tuple2(start, visited), minDist);
+            memo.put(new Tuple2(start, visited), maxDist);
         }
-        return minDist;
+        return maxDist;
     }
 
     public void run(){
@@ -73,21 +73,21 @@ public class Part1 {
                 graph.get(line[2]).add(new Tuple(line[0], Integer.parseInt(line[4])));
             }
             nodes = graph.keySet().size();
-            int shortestDistance = Integer.MAX_VALUE;
+            int longestDistance = Integer.MIN_VALUE;
             for(String s : graph.keySet()){
                 HashSet<String> visited = new HashSet<>();
                 visited.add(s);
                 int distance = pathFind(s, visited);
-                if(distance < shortestDistance) shortestDistance = distance;
+                if(distance > longestDistance) longestDistance = distance;
             }
-            System.out.println(shortestDistance);
+            System.out.println(longestDistance);
         } catch(Exception e){
             System.out.println("File does not exist.");
         }
     }
 
     public static void main(String[] args){
-        Part1 run = new Part1();
+        Part2 run = new Part2();
         run.run();
     }
 } 

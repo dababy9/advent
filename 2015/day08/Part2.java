@@ -1,17 +1,13 @@
 import java.io.File;
 import java.util.Scanner;
-public class Part1 {
+public class Part2 {
 
     public static int count(String s){
-        char[] c = s.substring(1, s.length()-1).toCharArray();
+        char[] c = s.toCharArray();
         int r = 0;
-        for(int i = 0; i < c.length; i++, r++){
-            if(c[i] == '\\'){
-                if(c[i+1] == 'x') i += 3;
-                else i++;
-            }
-        }
-        return r;
+        for(int i = 0; i < c.length; i++, r++)
+            if(c[i] == '\\' || c[i] == '"') r++;
+        return r + 2;
     }
 
     public void run(){
@@ -21,8 +17,8 @@ public class Part1 {
             int sum = 0;
             while(scan.hasNextLine()){
                 String line = scan.nextLine();
-                sum += line.length();
-                sum -= count(line);
+                sum += count(line);
+                sum -= line.length();
             }
             System.out.println(sum);
         } catch(Exception e){
@@ -31,7 +27,7 @@ public class Part1 {
     }
 
     public static void main(String[] args){
-        Part1 run = new Part1();
+        Part2 run = new Part2();
         run.run();
     }
 } 

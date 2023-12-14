@@ -1,7 +1,10 @@
 import java.io.File;
 import java.util.Scanner;
 import java.util.TreeMap;
-public class Part1 {
+import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.TreeMap;
+public class Part2 {
 
     public class Wire {
         public int value;
@@ -59,14 +62,16 @@ public class Part1 {
                 Wire.map.put(line[line.length-1], new Wire(line));
             }
             Wire.map.put("1", new Wire(new String[]{"1", "->", "1"}));
+            Wire.map.put("b", new Wire(new String[]{Integer.toString(Wire.map.get("a").getValue() & 0x0000FFFF), "->", "b"}));
+            Wire.memo = new TreeMap<>();
             System.out.println(Wire.map.get("a").getValue() & 0x0000FFFF);
         } catch(Exception e){
             System.out.println("File does not exist.");
-         }
+        }
     }
 
     public static void main(String[] args){
-        Part1 run = new Part1();
+        Part2 run = new Part2();
         run.run();
     }
 }
